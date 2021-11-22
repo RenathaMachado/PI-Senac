@@ -471,7 +471,6 @@ private Professor ObtemProfessorSelecionado(Scanner menu) {
 }
 
 
-
 public static boolean isDouble(String text) {
     try {
         Double.parseDouble(text);
