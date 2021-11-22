@@ -388,7 +388,87 @@ private Disciplina ObtemDisciplinaSelecionada(Scanner menu) {
 	return (Disciplina)(listaDisciplinas.get(Integer.parseInt(valorDigitado)));
 }
 
+private void Excluir(Scanner menu) {
+	
+	try {
+		
+		while(true) {
+			
+			Professor professorSelecionado = ObtemProfessorSelecionado(menu);
+			
+			if(professorSelecionado == null) {
+				System.out.print("Exclusão cancelada.\n");
+				break;
+			}
+			
+			System.out.print(professorSelecionado);
+	        
+	        System.out.print("Confirmar exclusão? (S/N) ");
+			
+			if(menu.nextLine().toUpperCase().contains("S")) {
+				professorSelecionado.Remover();
+				
+				System.out.print("Realizar nova exclusão? (S/N) ");
+				
+				if(menu.nextLine().toUpperCase().toUpperCase().contains("S"))
+					continue;					
+				else
+					break;
+				
+			}else {	
+				System.out.print("Atualização cancelada.\n");
+				break;
+			}	
+		}
+	} catch (Exception e) {
+		System.out.print("Falha ao excluir Professor. Retorno: " + e.getMessage());
+	}	
+}
 
+private Professor ObtemProfessorSelecionado(Scanner menu) {
+
+	String valorDigitado = null;		
+	var listaProfessores = new Professor().Buscar();
+	int numeroElementos = listaProfessores.size();
+	
+	try {
+		
+		if(numeroElementos == 0) {
+			System.out.print("Nenhuma professor disponívies.\n"
+						   + "Realizar o cadastro através do menu Cadastrar.\n"
+						   + "Digite 'OK' para continuar.\n");
+			menu.nextLine();
+			return null;
+		}
+		
+		System.out.print("\nLista de professores:\n\n");
+		
+		for (Object professorBD : listaProfessores) {
+			
+			int indiceLista = listaProfessores.indexOf(professorBD);
+			
+			System.out.print("Opção: " + indiceLista + " - Nome: " + ((Professor)professorBD).getNome() + "\n");
+		}
+		
+		System.out.print("Opção: " + numeroElementos + " - Retornar\n");
+		
+		while(!isValidIndex(valorDigitado, listaProfessores)) {
+			System.out.print("\nEscolha uma opção: ");
+			
+			valorDigitado = menu.nextLine();
+			
+			if(valorDigitado.contains(String.valueOf(numeroElementos)))
+				return null;
+			
+			if(!isValidIndex(valorDigitado, listaProfessores))
+				System.out.print("Opção inválida.\n");
+		}	
+		} catch (Exception e) {
+			System.out.print("Falha ao obter professor da lista. Retorno: " + e.getMessage());
+		}
+	
+	return (Professor)(listaProfessores.get(Integer.parseInt(valorDigitado)));
+}
 
 
 public static boolean isDouble(String text) {
