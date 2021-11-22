@@ -80,6 +80,10 @@ public class Professor extends PessoaFisica{
 			Salario += disciplina.getCargaHoraria() * ValorHoraAula;
 		}
 	}
+
+	public void apagarDisciplinas() {
+		DisciplinasMinistradas = new ArrayList<Disciplina>();
+	}
 	
 	public List<Object> Buscar() {
 		
